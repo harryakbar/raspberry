@@ -1,20 +1,19 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install SDL2 development libraries
+# Install required libraries
 RUN apt-get update && apt-get install -y \
-    libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
-    libsmpeg-dev libportmidi-dev libavformat-dev libswscale-dev libjpeg-dev zlib1g-dev \
-    && apt-get clean
-
-# Copy the requirements file
-COPY requirements.txt .
+    alsa-utils \
+    libasound2 \
+    libasound2-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-RUN pip install --upgrade pip && pip install -r requirements.txt
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
-# Copy the application files
+# Copy your application code
 COPY app/ .
 
 CMD ["python", "adzan_script.py"]

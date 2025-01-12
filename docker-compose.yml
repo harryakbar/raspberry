@@ -1,0 +1,14 @@
+services:
+  adzan:
+    build:
+      context: ./project-adzan
+    container_name: adzan_notifier
+    restart: unless-stopped
+    devices:
+      - "/dev/snd:/dev/snd" # Grant access to audio device
+
+  telegram-bot:
+    build:
+      context: ./project-telegram-bot
+    container_name: telegram_bot
+    restart: unless-stopped

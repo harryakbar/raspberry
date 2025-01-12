@@ -3,15 +3,11 @@ services:
     build:
       context: ./project-adzan
     container_name: adzan_notifier
-    restart: unless-stopped
     devices:
-      - "/dev/snd:/dev/snd" # Share the host audio device
+      - /dev/snd:/dev/snd
     environment:
-      - SDL_AUDIODRIVER=alsa # Use ALSA audio driver
-      - AUDIODEV=hw:0,0 # Optional: Specify the audio device
-    volumes:
-      - /etc/asound.conf:/etc/asound.conf # Share ALSA configuration
-      - /usr/share/alsa:/usr/share/alsa # Share ALSA system files
+      - SDL_AUDIODRIVER=alsa
+    restart: unless-stopped
 
   telegram-bot:
     build:

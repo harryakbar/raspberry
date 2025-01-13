@@ -1,13 +1,18 @@
 services:
-  adzan:
+  adzan-player:
     build:
-      context: ./project-adzan
-    container_name: adzan_notifier
+      context: ./project-adzan # Points to the project-adzan directory
+    container_name: adzan-player
+    volumes:
+      - ./project-adzan/app:/app
+    working_dir: /app
+    command: python adzan_script.py
     devices:
-      - /dev/snd:/dev/snd
+      - /dev/snd:/dev/snd # Pass ALSA sound card to container
     environment:
-      - SDL_AUDIODRIVER=alsa
-    restart: unless-stopped
+      - SDL_AUDIODRIVER=alsa # Use ALSA audio driver for pygame
+    stdin_open: true
+    tty: true
 
   telegram-bot:
     build:

@@ -1,18 +1,18 @@
-FROM python:3.11-slim as builder
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libfreetype6-dev \
-    libpng-dev \
-    libsdl2-dev \
-    libsdl2-image-dev \
-    libsdl2-mixer-dev \
-    libsdl2-ttf-dev
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Use a lightweight Python image compatible with Raspberry Pi
+FROM python:3.9-slim
 
-FROM python:3.11-slim
+# Set the working directory in the container
 WORKDIR /app
-COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
-COPY . .
+
+# Copy the application code to the container
+COPY app/ .
+COPY ./adzan.mp3 .
+
+# Install necessary system libraries and Python dependencies
+RUN apt-get update && apt-get install -y \
+    libsdl2-mixer-2.0-0 \
+    && pip install --no-cache-dir pygame \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Set the default command to run the script
 CMD ["python", "adzan_script.py"]

@@ -8,9 +8,11 @@ services:
     working_dir: /app
     command: python adzan_script.py
     devices:
-      - /dev/snd:/dev/snd # Pass ALSA sound card to container
+      - /dev/snd:/dev/snd # Share ALSA sound device
     environment:
-      - SDL_AUDIODRIVER=alsa # Use ALSA audio driver for pygame
+      - SDL_AUDIODRIVER=alsa # Use ALSA as the audio driver for pygame
+      - AUDIODEV=hw:0,0 # Specify the hardware audio device (adjust if necessary)
+
     stdin_open: true
     tty: true
 

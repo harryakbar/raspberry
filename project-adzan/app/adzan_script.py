@@ -2,7 +2,7 @@ import pygame.mixer
 import os
 import time
 
-FILE_PATH = './adzan.mp3'
+FILE_PATH = '../adzan.mp3'
 os.environ["SDL_AUDIODRIVER"] = "alsa"
 
 pygame.mixer.init()

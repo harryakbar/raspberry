@@ -1,23 +1,30 @@
 services:
-  adzan-player:
-    build:
-      context: ./project-adzan # Points to the project-adzan directory
-    container_name: adzan-player
-    volumes:
-      - ./project-adzan/app:/app
-    working_dir: /app
-    command: python adzan_script.py
-    devices:
-      - /dev/snd:/dev/snd # Share ALSA sound device
-    environment:
-      - SDL_AUDIODRIVER=alsa # Use ALSA as the audio driver for pygame
-      - AUDIODEV=hw:0,0 # Specify the hardware audio device (adjust if necessary)
-
-    stdin_open: true
-    tty: true
+  # adzan-player:
+  #   build:
+  #     context: ./project-adzan # Points to the project-adzan directory
+  #   container_name: adzan-player
+  #   volumes:
+  #     - ./project-adzan/app:/app
+  #   working_dir: /app
+  #   command: python adzan_script.py
+  #   devices:
+  #     - /dev/snd:/dev/snd # Share ALSA sound device
+  #   environment:
+  #     - SDL_AUDIODRIVER=alsa # Use ALSA as the audio driver for pygame
+  #     - AUDIODEV=hw:0,0 # Specify the hardware audio device (adjust if necessary)
+  #   stdin_open: true
+  #   tty: true
 
   telegram-bot:
     build:
       context: ./project-telegram-bot
     container_name: telegram_bot
     restart: unless-stopped
+
+  vite-project:
+    build:
+      context: ./vite-project
+    container_name: vite_project
+    restart: unless-stopped
+    ports:
+      - "3000:80"

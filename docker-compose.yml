@@ -12,4 +12,4 @@ services:
       - "/etc/machine-id:/etc/machine-id"
       - "/run/dbus:/run/dbus"
     network_mode: "host" # Use host networking for low-latency audio
-    privileged: true # Allow privileged access for audio devices
+    privileged: true

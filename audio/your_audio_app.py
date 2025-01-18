@@ -34,7 +34,6 @@ def play_audio():
 def main():
     updater = Updater(BOT_TOKEN, use_context=True)
     dp = updater.dispatcher
-    updater.message.reply_text("System started!")
 
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("bell", test_speaker))

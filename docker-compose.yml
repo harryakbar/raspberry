@@ -13,17 +13,3 @@ services:
       - "/run/dbus:/run/dbus"
     network_mode: "host" # Use host networking for low-latency audio
     privileged: true # Allow privileged access for audio devices
-
-  telegram-bot:
-    build:
-      context: ./project-telegram-bot
-    container_name: telegram_bot
-    restart: unless-stopped
-
-  vite-project:
-    build:
-      context: ./vite-project
-    container_name: vite_project
-    restart: unless-stopped
-    ports:
-      - "3000:80"

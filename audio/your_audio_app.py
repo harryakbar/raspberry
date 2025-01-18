@@ -32,6 +32,7 @@ def play_audio():
         time.sleep(1)
 
 def main():
+    update.message.reply_text("System started!")
     updater = Updater(BOT_TOKEN, use_context=True)
     dp = updater.dispatcher
     dp.add_handler(CommandHandler("start", start))

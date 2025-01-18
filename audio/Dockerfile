@@ -1,8 +1,14 @@
 FROM python:3.11-slim
+
 RUN apt-get update && apt-get install -y \
     alsa-utils \
-    bluez \
-    python3-pygame && pip install --no-cache-dir pygame
+    libasound2 \
+    pulseaudio \
+    libpulse0 \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 COPY . .
+RUN pip install pygame
+
 CMD ["python", "your_audio_app.py"]

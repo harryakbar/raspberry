@@ -1,19 +1,18 @@
 services:
-  # adzan-player:
-  #   build:
-  #     context: ./project-adzan # Points to the project-adzan directory
-  #   container_name: adzan-player
-  #   volumes:
-  #     - ./project-adzan/app:/app
-  #   working_dir: /app
-  #   command: python adzan_script.py
-  #   devices:
-  #     - /dev/snd:/dev/snd # Share ALSA sound device
-  #   environment:
-  #     - SDL_AUDIODRIVER=alsa # Use ALSA as the audio driver for pygame
-  #     - AUDIODEV=hw:0,0 # Specify the hardware audio device (adjust if necessary)
-  #   stdin_open: true
-  #   tty: true
+  audio-app:
+    build:
+      context: ./audio # Path to the directory containing your Dockerfile
+    environment:
+      DISPLAY: "${DISPLAY}"
+      PULSE_SERVER: "unix:${XDG_RUNTIME_DIR}/pulse/native"
+    devices:
+      - "/dev/snd:/dev/snd" # Pass audio device
+    volumes:
+      - "${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native"
+      - "/etc/machine-id:/etc/machine-id"
+      - "/run/dbus:/run/dbus"
+    network_mode: "host" # Use host networking for low-latency audio
+    privileged: true # Allow privileged access for audio devices
 
   telegram-bot:
     build:

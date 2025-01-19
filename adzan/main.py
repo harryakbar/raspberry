@@ -9,10 +9,8 @@ CHAT_ID = "610868224"
 ADZAN_FILE_PATH = "./adzan.mp3"
 FAJR_ADZAN_FILE_PATH = "./fajr_adzan.mp3"
 
-pygame.mixer.init()
-
 adzan_files = {
-    'fajr': ADZAN_FILE_PATH,
+    'fajr': FAJR_ADZAN_FILE_PATH,
     'dhuhr': ADZAN_FILE_PATH,
     'asr': ADZAN_FILE_PATH,
     'maghrib': ADZAN_FILE_PATH,
@@ -21,6 +19,7 @@ adzan_files = {
 
 def play_adzan(prayer_name):
     print(f"Playing {prayer_name} Adzan...")
+    pygame.mixer.init()
     pygame.mixer.music.load(adzan_files[prayer_name])
     pygame.mixer.music.play()
     while pygame.mixer.music.get_busy():
@@ -69,7 +68,7 @@ def notify_adzan(prayer_name):
 def main():
     while True:
         now = datetime.now()
-
+        play_adzan('fajr')
         if now.hour == prayer_times['fajr'].hour and now.minute == prayer_times['fajr'].minute:
             notify_adzan('Fajr')
             play_adzan('fajr')

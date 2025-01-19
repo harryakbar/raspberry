@@ -28,8 +28,15 @@ def play_audio():
     pygame.mixer.music.play()
 
     # Wait until the music finishes playing
-    while pygame.mixer.music.get_busy('
-    'er("bell", test_speaker))
+    while pygame.mixer.music.get_busy():
+        time.sleep(1)
+
+def main():
+    updater = Updater(BOT_TOKEN, use_context=True)
+    dp = updater.dispatcher
+
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("bell", test_speaker))
     updater.start_polling()
     updater.idle()
 

@@ -13,4 +13,4 @@ COPY . .
 RUN pip install -r requirements.txt
 RUN pip install pygame
 
-CMD ["python", "your_audio_app.py"]
+CMD ["python", "main.py"]

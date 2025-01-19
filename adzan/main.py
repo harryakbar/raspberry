@@ -68,7 +68,7 @@ def notify_adzan(prayer_name):
 def main():
     while True:
         now = datetime.now()
-        play_adzan('fajr')
+
         if now.hour == prayer_times['fajr'].hour and now.minute == prayer_times['fajr'].minute:
             notify_adzan('Fajr')
             play_adzan('fajr')

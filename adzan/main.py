@@ -66,23 +66,31 @@ def notify_adzan(prayer_name):
     message = f"Hi! Adzan {prayer_name} has started! ({current_time})"
     send_telegram_message(message)
 
-while True:
-    now = datetime.now()
+def main():
+    while True:
+        now = datetime.now()
 
-    if now.hour == prayer_times['fajr'].hour and now.minute == prayer_times['fajr'].minute:
-        notify_adzan('Fajr')
-        play_adzan('fajr')
-    elif now.hour == prayer_times['dhuhr'].hour and now.minute == prayer_times['dhuhr'].minute:
-        notify_adzan('Dhuhr')
-        play_adzan('dhuhr')
-    elif now.hour == prayer_times['asr'].hour and now.minute == prayer_times['asr'].minute:
-        notify_adzan('Asr')
-        play_adzan('asr')
-    elif now.hour == prayer_times['maghrib'].hour and now.minute == prayer_times['maghrib'].minute:
-        notify_adzan('Maghrib')
-        play_adzan('maghrib')
-    elif now.hour == prayer_times['isha'].hour and now.minute == prayer_times['isha'].minute:
-        notify_adzan('Isha')
-        play_adzan('isha')
+        if now.hour == prayer_times['fajr'].hour and now.minute == prayer_times['fajr'].minute:
+            notify_adzan('Fajr')
+            play_adzan('fajr')
+        elif now.hour == prayer_times['dhuhr'].hour and now.minute == prayer_times['dhuhr'].minute:
+            notify_adzan('Dhuhr')
+            play_adzan('dhuhr')
+        elif now.hour == prayer_times['asr'].hour and now.minute == prayer_times['asr'].minute:
+            notify_adzan('Asr')
+            play_adzan('asr')
+        elif now.hour == prayer_times['maghrib'].hour and now.minute == prayer_times['maghrib'].minute:
+            notify_adzan('Maghrib')
+            play_adzan('maghrib')
+        elif now.hour == prayer_times['isha'].hour and now.minute == prayer_times['isha'].minute:
+            notify_adzan('Isha')
+            play_adzan('isha')
 
-    time.sleep(60)
+        time.sleep(60)
+
+if __name__ == "__main__":
+    try:
+        send_telegram_message("starting adzan bot...")
+        main()
+    except Exception as e:
+        print(f"Error: {e}")

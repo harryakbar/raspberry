@@ -1,17 +1,25 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+import { getBluetoothDevices, scanBluetoothDevices, BluetoothDevice } from '../../api';
 
 const BluetoothSettings = () => {
   const [isScanning, setIsScanning] = useState(false);
-  const [devices, setDevices] = useState([
-    { id: 1, name: 'Device 1', connected: true },
-    { id: 2, name: 'Device 2', connected: false },
-  ]);
+  const [devices, setDevices] = useState<BluetoothDevice[]>([]);
 
-  const handleScan = () => {
+  useEffect(() => {
+    const fetchDevices = async () => {
+      const fetchedDevices = await getBluetoothDevices();
+      setDevices(fetchedDevices);
+    };
+    fetchDevices();
+  }, []);
+
+  const handleScan = async () => {
     setIsScanning(true);
-    setTimeout(() => {
-      setIsScanning(false);
-    }, 2000);
+    await scanBluetoothDevices();
+    const fetchedDevices = await getBluetoothDevices();
+    setDevices(fetchedDevices);
+    setIsScanning(false);
   };
 
   return (

@@ -71,46 +71,54 @@ export const getSystemMetrics = async (): Promise<SystemMetrics> => {
 // =============================================================================
 
 export interface Surah {
-  id: number;
+  number: number;
   name: string;
-  ayahs: number;
+  englishName: string;
+  englishNameTranslation: string;
+  numberOfAyahs: number;
+  revelationType: string;
 }
 
 export interface Ayat {
-  surah: string;
-  ayah: number;
-  text: string;
+  code: number;
+  status: string;
+  data: {
+    number: number;
+    text: string;
+    surah: {
+      number: number;
+      name: string;
+      englishName: string;
+      englishNameTranslation: string;
+      numberOfAyahs: number;
+      revelationType: string;
+    };
+    edition: {
+      identifier: string;
+      language: string;
+      name: string;
+      englishName: string;
+      format: string;
+      type: string;
+    };
+  };
 }
 
 export const getSurahs = async (): Promise<Surah[]> => {
-  // Replace with your actual API call, e.g., fetch('/api/quran/surahs')
   console.log("Fetching surah list...");
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve([
-        { id: 1, name: "Al-Fatihah", ayahs: 7 },
-        { id: 2, name: "Al-Baqarah", ayahs: 286 },
-        { id: 3, name: "Ali 'Imran", ayahs: 200 },
-        { id: 4, name: "An-Nisa'", ayahs: 176 },
-        { id: 5, name: "Al-Ma'idah", ayahs: 120 },
-      ]);
-    }, 500);
-  });
+  const response = await fetch("http://api.alquran.cloud/v1/surah");
+  const data = await response.json();
+  return data.data;
 };
 
 export const getAyat = async (
   surahId: number,
   ayahNumber: number
 ): Promise<Ayat> => {
-  // Replace with your actual API call, e.g., fetch(`/api/quran/surahs/${surahId}/ayat/${ayahNumber}`)
   console.log(`Fetching Ayat ${ayahNumber} of Surah ${surahId}...`);
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        surah: "Al-Fatihah",
-        ayah: ayahNumber,
-        text: `This is a sample text for ayah ${ayahNumber}. In the name of Allah, the Most Gracious, the Most Merciful.`,
-      });
-    }, 200);
-  });
+  const response = await fetch(
+    `http://api.alquran.cloud/v1/ayah/${surahId}:${ayahNumber}`
+  );
+  const data = await response.json();
+  return data;
 };

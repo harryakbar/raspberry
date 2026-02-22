@@ -1,10 +1,12 @@
+import os
+import sys
 import pygame
 import time
 import requests
 from datetime import datetime
 from telegram.ext import Updater, CommandHandler
 
-BOT_TOKEN = "7607085823:AAH-lo6Dm9JfXZGfwh7NJGyFCZihG1KEiZ0"
+BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 
 def start(update, context):
     update.message.reply_text("Hello! Use /test_speaker to test the adzan sound.")
@@ -74,6 +76,9 @@ def main():
     updater.idle()
 
 if __name__ == "__main__":
+    if not BOT_TOKEN:
+        print("Error: Set TELEGRAM_BOT_TOKEN environment variable.")
+        sys.exit(1)
     try:
         main()
     except Exception as e:

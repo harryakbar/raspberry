@@ -1,11 +1,12 @@
+import os
 import time
 import pygame
 import requests
 from datetime import date
 from datetime import datetime, timedelta
 
-BOT_TOKEN = "7607085823:AAH-lo6Dm9JfXZGfwh7NJGyFCZihG1KEiZ0"
-CHAT_ID = "610868224"
+BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
+CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 ADZAN_FILE_PATH = "./adzan.mp3"
 FAJR_ADZAN_FILE_PATH = "./fajr_adzan.mp3"
 
@@ -88,6 +89,9 @@ def main():
         time.sleep(60)
 
 if __name__ == "__main__":
+    if not BOT_TOKEN or not CHAT_ID:
+        print("Error: Set TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID environment variables.")
+        exit(1)
     try:
         send_telegram_message("starting adzan bot...")
         main()
